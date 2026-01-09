@@ -28,26 +28,32 @@ export const WorldMap: React.FC<WorldMapProps> = ({ onSelectTarget, missions, on
       .then(data => {
         setWorldData(feature(data, data.objects.countries));
       });
+  }, []);
 
-    const handleResize = () => {
-      if (containerRef.current) {
+  // Handle Resizing with ResizeObserver for better accuracy
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
         setDimensions({
-          width: containerRef.current.clientWidth,
-          height: containerRef.current.clientHeight
+          width: entry.contentRect.width,
+          height: entry.contentRect.height
         });
       }
-    };
+    });
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
+    resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
   }, []);
 
   // Map Projection
   const { projection, pathGenerator } = useMemo(() => {
+    // Responsive scaling
+    const scale = dimensions.width > 600 ? dimensions.width / 6.5 : dimensions.width / 4;
+    
     const proj = d3.geoMercator()
-      .scale(dimensions.width / 6.5) 
+      .scale(scale) 
       .translate([dimensions.width / 2, dimensions.height / 1.5]);
     
     return {
@@ -58,7 +64,6 @@ export const WorldMap: React.FC<WorldMapProps> = ({ onSelectTarget, missions, on
 
   // Handle Map Click
   const handleMapClick = (event: React.MouseEvent<SVGSVGElement>) => {
-    // Allow clicking anytime, simply adds to the queue
     const svg = svgRef.current;
     if (!svg) return;
 
@@ -230,7 +235,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({ onSelectTarget, missions, on
         }
     };
 
-  }, [missions, projection, onImpact]); // Re-run when missions change
+  }, [missions, projection, onImpact]);
 
   // DC Marker
   const dcPoint = projection(DC_COORDS);

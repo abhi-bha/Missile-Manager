@@ -6,21 +6,24 @@
     <title>Global Impact Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <script type="importmap">
+    <link rel="stylesheet" href="./index.css">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
     "react/": "https://esm.sh/react@^19.2.3/",
     "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "d3": "https://esm.sh/d3@^7.9.0",
-    "topojson-client": "https://esm.sh/topojson-client@^3.1.0"
+    "topojson-client": "https://esm.sh/topojson-client@^3.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
