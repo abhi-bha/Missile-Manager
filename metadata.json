@@ -1,0 +1,5 @@
+{
+  "name": "Global Impact Simulator",
+  "description": "A strategic simulation dashboard visualizing kinetic impact trajectories and generating fictional damage assessment reports using Gemini AI.",
+  "requestFramePermissions": []
+}
